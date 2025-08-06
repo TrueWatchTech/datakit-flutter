@@ -1,0 +1,64 @@
+plugins {
+    id "com.android.library"
+    id "kotlin-android"
+}
+
+group 'com.ft.sdk.flutter'
+version '1.0-SNAPSHOT'
+
+rootProject.allprojects {
+    repositories {
+        google()
+        mavenCentral()
+//        jcenter()
+        maven {
+            url 'https://mvnrepo.truewatch.com/repository/maven-releases'
+//            url 'https://mvnrepo.truewatch.com/repository/maven-snapshots'
+        }
+    }
+}
+
+//apply plugin: 'com.android.library'
+//apply plugin: 'kotlin-android'
+
+android {
+    if (project.android.hasProperty("namespace")) {
+        namespace 'com.ft.sdk.flutter'
+    }
+    compileSdk 34
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+    defaultConfig {
+        minSdkVersion 21
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+//def kotlin_coroutines_version = '1.5.2'
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0"
+    implementation 'com.truewatch.ft.mobile.sdk.tracker.agent:ft-sdk:1.6.12'
+    implementation 'com.truewatch.ft.mobile.sdk.tracker.agent:ft-native:1.1.2'
+
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+
+//    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutines_version"
+//    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutines_version"
+}
